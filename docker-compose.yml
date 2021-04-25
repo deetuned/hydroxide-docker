@@ -2,33 +2,33 @@ version: '3.5'
 
 services:
   hydroxide:
-    image: "hydroxide:${HYDROXIDE_VERSION}"
-    container_name: hydroxide
+    image: "${IMAGE_NAME}:${APP_VERSION}"
+    container_name:  "${IMAGE_NAME}"
     build:
       context: .
       target: runner
       args:
-        HYDROXIDE_VERSION: "${HYDROXIDE_VERSION}"
-    restart: unless-stopped
+        APP_VERSION: "${APP_VERSION}"
+    restart: "no"
     ports:
       - 1025:1025
       - 1143:1143
       - 8080:8080
     environment:
-      USERNAME: "${PROTONMAIL_LOGON}"
-      PASSWORD: "${PROTONMAIL_PASSWORD}"
-      TOKEN: "${PROTONMAIL_EXTRA_2FA}"
-      DEBUG: "${HYDROXIDE_DEBUG}"
-      INTERPOD: "${HYDROXIDE_INTERPOD}"
+      EMAIL: "${EMAIL}"
+      PASSWORD: "${PASSWORD}"
+      TOKEN: "${EXTRA_2FA}"
+      DEBUG: "${DEBUG}"
+      INTERPOD: "${INTERPOD}"
     volumes:
       - /data/hydroxide:/home/hydroxide/.config/hydroxide
-    networks:
-      - mail
+    # networks:
+    #   - mail
 
-networks:
-  mail:
-    name: mail
-    driver: bridge
+# networks:
+#   mail:
+#     name: mail
+#     driver: bridge
 
 # add your service that will integrate with hydroxide to this file
 

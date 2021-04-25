@@ -1,11 +1,11 @@
-#!/bin/sh -e
+#!/bin/sh
 
 # If access token does not exist, attempt authentication
 if [ ! -f ~/.config/hydroxide/auth.json ]; then
 
   if [ $# -ne 2 ] && [ $# -ne 3 ]; then
     printf "Incorrect argument count.\n"
-    printf "Please provide:\n1) Username\n2) Password\n3) Two factor token [Optional]\n"
+    printf "Please provide:\n1) Username\n2) Password\n3) Two factor token [if enabled]\n"
     exit 1
   fi
 
