@@ -28,7 +28,7 @@ RUN wget -c https://github.com/emersion/hydroxide/releases/download/v${APP_VERSI
 
 
 # Container OS
-FROM alpine:3.9 as runner
+FROM alpine:3.16 as runner
 
 LABEL org.opencontainers.image.title="Docker Hydroxide"
 LABEL org.opencontainers.image.description="Containerised version of Hydroxide, the FOSS alternative to ProtonMail's Bridge application. Authenticates and exposes SMTP, IMAP, and CalDAV interfaces."
