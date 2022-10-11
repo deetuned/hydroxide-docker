@@ -18,7 +18,19 @@ ARG APP_VERSION=0.2.18
 WORKDIR /src
 
 # Build Hydroxide binary, releases preferred for stability, source compile chosen for compatibility and security
-RUN wget -c https://github.com/emersion/hydroxide/releases/download/v${APP_VERSION}/hydroxide-${APP_VERSION}.tar.gz -qO - | tar -xz --strip 1 \
+RUN if [ "${APP_VERSION}" = "latest" ]; then \
+      apk add --no-cache curl; \
+      RELEASE=$(curl --silent \
+          "https://api.github.com/repos/emersion/hydroxide/releases" | \
+          grep '"tag_name":' | \
+          sed -E 's/.*"v([^"]+)".*/\1/' | \
+          sort -Vr | head -n 1); \
+    else \
+      RELEASE=${APP_VERSION}; \
+    fi \
+    && RELEASES="https://github.com/emersion/hydroxide/releases/download" \
+    && RELEASE_ARCHIVE="v${RELEASE}/hydroxide-${RELEASE}.tar.gz" \
+    && wget -c "${RELEASES}/${RELEASE_ARCHIVE}" -qO - | tar -xz --strip 1 \
     && go get -d ./cmd/hydroxide \
     && go build -o hydroxide ./cmd/hydroxide
 
