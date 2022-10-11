@@ -14,7 +14,7 @@
 # Builder OS
 FROM golang:1-alpine as builder
 
-ARG APP_VERSION=0.2.18
+ARG APP_VERSION=0.2.24
 WORKDIR /src
 
 # Build Hydroxide binary, releases preferred for stability, source compile chosen for compatibility and security
